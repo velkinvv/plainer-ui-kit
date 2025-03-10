@@ -8,6 +8,7 @@ import prettier from 'prettier'
 import unicorn from 'eslint-plugin-unicorn'
 import pluginTsLint from '@typescript-eslint/eslint-plugin'
 import unusedImports from 'eslint-plugin-unused-imports'
+import react from 'eslint-plugin-react'
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -19,13 +20,19 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
+    settings: { react: { version: '19.0' } },
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       'unused-imports': unusedImports,
       prettier,
-      unicorn
+      unicorn,
+      react
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
